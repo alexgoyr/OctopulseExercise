@@ -2,6 +2,7 @@ import React, {useState, useEffect } from 'react';
 import './App.css';
 import CheckboxListSecondary from './StreamList'
 import GraphList from './GraphList'
+import DateSelecter from './DateSelecter'
 import { useInView } from 'react-intersection-observer';
 import CircularProgress from '@mui/material/CircularProgress';
 import Toolbar from '@mui/material/Toolbar';
@@ -70,9 +71,11 @@ function App() {
       <Box
         component="main"
         sx={{
-        paddingLeft: 45
+        paddingLeft: 45,
+        paddingTop: 1
        }}
       >
+      <DateSelecter/>
       <GraphList/>
       </Box>
     </div>
