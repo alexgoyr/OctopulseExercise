@@ -3,9 +3,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Checkbox from '@mui/material/Checkbox';
-import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function CheckboxListSecondary({list, triggerRef}) {
@@ -22,17 +20,25 @@ export default function CheckboxListSecondary({list, triggerRef}) {
     }
     setChecked(newChecked);
   };
-  console.log(list)
+  //console.log(list)
   const listLength = list.length;
   return (
-    <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    
+    <List sx={{
+      width: '100%',
+      maxWidth: 360,
+      bgcolor: 'background.paper',
+      overflow: 'auto',
+      maxHeight: 900,
+      '& ul': { padding: 0 },
+    }}>
       {list.map((value, index) => {
         const labelId = `checkbox-list-secondary-label-${value.libelle_station}`;
         if (index + 1 === listLength)
           currentRef = triggerRef
         return (
           <ListItem
-            key={value.libelle_station}
+            key={index}
             secondaryAction={
               <Checkbox
                 edge="end"
