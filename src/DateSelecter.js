@@ -6,26 +6,23 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useAppContext } from './contexts/AppContext'
 
 
 export default function DateSelecter({search}) {
   const [fromDate, setFromDate] = React.useState(new Date());
   const [toDate, setToDate] = React.useState(new Date());
-    let appContext = useAppContext();
   
-    const handleChangeFrom = (newValue) => {
-      setFromDate(newValue);
-    };
+  const handleChangeFrom = (newValue) => {
+    setFromDate(newValue);
+  };
 
-    const handleChangeTo = (newValue) => {
-      setToDate(newValue);
-    };
+  const handleChangeTo = (newValue) => {
+    setToDate(newValue);
+  };
 
-    const onClickButton = () => {
-      console.log(appContext.checked);
-      search(fromDate, toDate);
-    }
+  const onClickButton = () => {
+    search(fromDate, toDate);
+  }
 
   return (
     <div>
