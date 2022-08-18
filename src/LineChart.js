@@ -10,10 +10,16 @@ export default function LineChart({index, baseData, fromDate, toDate, code_stati
         labels: [],
         datasets: [],
     });
+    const [noDataFound, setNoDataFound] = useState(false)
 
     useEffect(() => {
         const loadData = async (jsonData) => {
             console.log(jsonData)
+            if (jsonData === undefined)
+                return
+            else if (jsonData.length < 1) {
+                setNoDataFound(true)
+            }
             try {
                 setChartData({
                     labels: jsonData.map((data) => data.date_mesure_temp),
@@ -73,9 +79,11 @@ export default function LineChart({index, baseData, fromDate, toDate, code_stati
             {
                 fromDate !== undefined && toDate !== undefined ?
                     chartData.labels.length === 0
-                        ? <CircularProgress />
+                        ? noDataFound
+                            ? <h1>No Data for this period of time</h1>
+                            :<CircularProgress />
                         : <Line key={code_station} data={chartData} />
-                        :null
+                    :null
             }
 
         </div>
