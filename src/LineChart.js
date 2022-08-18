@@ -12,14 +12,17 @@ export default function LineChart({index, baseData, fromDate, toDate, code_stati
     });
 
     useEffect(() => {
-        const loadData = async () => {
+        const loadData = async (jsonData) => {
+            console.log(jsonData)
             try {
                 setChartData({
-                    labels: baseData.map((data) => data.year),
+                    labels: jsonData.map((data) => data.date_mesure_temp),
                     datasets: [
                         {
-                            label: "Users Gained",
-                            data: baseData.map((data) => data.userGain),
+                            label: jsonData.length > 0
+                                ? jsonData[0].libelle_station + " (°C)"
+                                : "No data found for this period of time " + code_station.to_string,
+                            data: jsonData.map((data) => data.resultat),
                             backgroundColor: [
                                 "rgba(75,192,192,1)",
                                 "#ecf0f1",
@@ -44,11 +47,12 @@ export default function LineChart({index, baseData, fromDate, toDate, code_stati
                 try {
                     const requestUrl = 'https://hubeau.eaufrance.fr/api/v1/temperature/chronique?code_station='+ code_station
                     + '&date_debut_mesure='
-                    + format(fromDate, "yyyy_MM_dd")
-                    + '&date_fin_mesure=' + format(toDate, "yyyy_MM_dd");
+                    + format(fromDate, "yyyy-MM-dd")
+                    + '&date_fin_mesure=' + format(toDate, "yyyy-MM-dd");
                     await fetch(requestUrl).then((response) => {
                         response.json().then((json) => {
                             console.log(json)
+                            loadData(json.data);
                             //setStreamList(json.data)
                         })
                     }).catch(error => {
@@ -77,3 +81,26 @@ export default function LineChart({index, baseData, fromDate, toDate, code_stati
         </div>
     );
 }
+
+/*code_commune: "97418"
+code_cours_eau: null
+code_parametre: "1301"
+code_qualification: "1"
+code_station: "10310812"
+code_unite: "27"
+date_mesure_temp: "2010-09-08"
+geometry: {type: "Point", crs: {…}, coordinates: Array(2)}
+heure_mesure_temp: "11:00:00"
+latitude: -20.969466696
+libelle_commune: "Sainte-Marie"
+libelle_cours_eau: null
+libelle_parametre: "Température de l'Eau"
+libelle_qualification: "Correcte"
+libelle_station: "La Rivière des Pluies à l'aplomb du piton Tanan"
+localisation: "gorge aval Ravine Diable"
+longitude: 55.491394165
+resultat: 18.666
+symbole_unite: "°C"
+uri_cours_eau: null
+uri_station: "https://id.eaufrance.fr/StationMesureEauxSurface/10310812"
+ */

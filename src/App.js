@@ -49,12 +49,13 @@ function App() {
     setToDate(toDate);
   }
 
-  const onChangeCheckList = (value) => () => {
+  const onChangeCheckList = (value, libelle_station) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
       newChecked.push(value);
+      
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -64,7 +65,7 @@ function App() {
   if (furtherLoading === false && inView) {
     console.log(furtherLoading);
     setFurtherLoadingAsync(true);
-    setElemsToShow(elemsToShow + 20);
+    setElemsToShow(elemsToShow + 50);
   } else if (furtherLoading === true && inView === false) {
     setFurtherLoadingAsync(false);
     console.log(furtherLoading);
