@@ -7,12 +7,15 @@ import { useInView } from 'react-intersection-observer';
 import CircularProgress from '@mui/material/CircularProgress';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
+import { AppProvider } from './contexts/AppContext'
 
 import Drawer from '@mui/material/Drawer';
 function App() {
   const [streamList, setStreamList] = useState([]);
   const [elemsToShow, setElemsToShow] = useState(20);
   const [furtherLoading, setFurtherLoading] = useState(false);
+  const [fromDate, setFromDate] = React.useState(new Date());
+  const [toDate, setToDate] = React.useState(new Date());
   const [ref, inView] = useInView();
 
   useEffect(() => {
@@ -41,6 +44,11 @@ function App() {
     setFurtherLoading(bool);
   }
 
+  const search = (fromDate, toDate) => {
+    setFromDate(fromDate);
+    setToDate(toDate);
+  }
+
   if (furtherLoading === false && inView) {
     console.log(furtherLoading);
     setFurtherLoadingAsync(true);
@@ -51,33 +59,36 @@ function App() {
   }
 
   return (
-    <div><Drawer
-    sx={{
-      width: 360,
-      flexShrink: 0,
-      '& .MuiDrawer-paper': {
-        width: 360,
-        boxSizing: 'border-box',
-      },
-    }}
-    variant="permanent"
-    anchor="left"
-  >
-        {streamList.length === 0
-        ? <CircularProgress/>
-        : <CheckboxListSecondary list={streamList} triggerRef={ref}/>
-        }
-      </Drawer>
-      <Box
-        component="main"
-        sx={{
-        paddingLeft: 45,
-        paddingTop: 1
-       }}
-      >
-      <DateSelecter/>
-      <GraphList/>
-      </Box>
+    <div>
+      <AppProvider>
+        <Drawer
+          sx={{
+            width: 360,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: 360,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
+          {streamList.length === 0
+            ? <CircularProgress />
+            : <CheckboxListSecondary list={streamList} triggerRef={ref} />
+          }
+        </Drawer>
+        <Box
+          component="main"
+          sx={{
+            paddingLeft: 45,
+            paddingTop: 1
+          }}
+        >
+          <DateSelecter search={search}/>
+          <GraphList />
+        </Box>
+      </AppProvider>
     </div>
   );
 }

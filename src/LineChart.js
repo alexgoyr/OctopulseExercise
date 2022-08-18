@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 import CircularProgress from '@mui/material/CircularProgress';
 import { Chart as ChartJS } from "chart.js/auto";
 
-export default function LineChart({baseData}) {
+export default function LineChart({baseData, from, to, code_station}) {
 
     const [chartData, setChartData] = useState({
         labels: [],
@@ -11,6 +11,7 @@ export default function LineChart({baseData}) {
     });
 
     useEffect(() => {
+        
         const loadData = async () => {
             try {
                 setChartData({

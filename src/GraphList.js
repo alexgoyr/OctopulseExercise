@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import LineChart from './LineChart';
+import { useAppContext } from './contexts/AppContext'
 
-export default function GraphList() {
+export default function GraphList({from, to}) {
+    const {checked} = useAppContext();
     const UserData = [
         {
           id: 1,
@@ -37,7 +39,9 @@ export default function GraphList() {
       
   return (
       <div>
-          <LineChart baseData={UserData}/>
+        {checked.map((value) => {
+          return (<LineChart baseData={UserData}/>);
+        })}
       </div>
   );
 }

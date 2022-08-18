@@ -5,22 +5,25 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useAppContext } from './contexts/AppContext'
+
 
 export default function CheckboxListSecondary({list, triggerRef}) {
-  const [checked, setChecked] = React.useState([]);
+  let appContext = useAppContext();
+  
   let currentRef = useRef()
   const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    const currentIndex = appContext.checked.indexOf(value);
+    const newChecked = [...appContext.checked];
 
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
       newChecked.splice(currentIndex, 1);
     }
-    setChecked(newChecked);
+    appContext.setChecked(newChecked);
   };
-  //console.log(list)
+  console.log(list)
   const listLength = list.length;
   return (
     
@@ -33,7 +36,7 @@ export default function CheckboxListSecondary({list, triggerRef}) {
       '& ul': { padding: 0 },
     }}>
       {list.map((value, index) => {
-        const labelId = `checkbox-list-secondary-label-${value.libelle_station}`;
+        const labelId = `checkbox-list-secondary-label-${value.code_station}`;
         if (index + 1 === listLength)
           currentRef = triggerRef
         return (
@@ -42,8 +45,8 @@ export default function CheckboxListSecondary({list, triggerRef}) {
             secondaryAction={
               <Checkbox
                 edge="end"
-                onChange={handleToggle(value.libelle_station)}
-                checked={checked.indexOf(value.libelle_station) !== -1}
+                onChange={handleToggle(value.code_station)}
+                checked={appContext.checked.indexOf(value.code_station) !== -1}
                 inputProps={{ 'aria-labelledby': labelId }}
               />
             }
