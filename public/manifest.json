@@ -1,0 +1,10 @@
+{
+    "short_name": "French Streams",
+    "name": "Visualise french water streams temperature.",
+    "icons": [    
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }
