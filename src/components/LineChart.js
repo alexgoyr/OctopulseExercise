@@ -58,8 +58,7 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
                     const requestUrl = 'https://hubeau.eaufrance.fr/api/v1/temperature/chronique?code_station='+ code_station
                     + '&date_debut_mesure='
                     + format(fromDate, "yyyy-MM-dd")
-                    + '&date_fin_mesure=' + format(toDate, "yyyy-MM-dd")
-                    + '&size=400';
+                    + '&date_fin_mesure=' + format(toDate, "yyyy-MM-dd");
                     await fetch(requestUrl).then((response) => {
                         response.json().then((json) => {
                             if (json.data === undefined)
