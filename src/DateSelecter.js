@@ -27,10 +27,9 @@ export default function DateSelecter({search}) {
   return (
     <div>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <Stack spacing={3}>
+        <Stack >
           <Box sx={{ alignSelf: 'center' }}>
             <DesktopDatePicker
-              sx={{ paddingRight: 10 }}
               label="From"
               inputFormat="yyyy/MM/dd"
               value={fromDate}
@@ -38,7 +37,6 @@ export default function DateSelecter({search}) {
               renderInput={(params) => <TextField {...params} />}
             />
             <DesktopDatePicker
-              sx={{ paddingLeft: 10 }}
               label="To"
               inputFormat="yyyy/MM/dd"
               value={toDate}

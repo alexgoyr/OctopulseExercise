@@ -4,30 +4,31 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Chart as ChartJS } from "chart.js/auto";
 import { format } from "date-fns";
 
-export default function LineChart({index, baseData, fromDate, toDate, code_station}) {
+export default function LineChart({index, fromDate, toDate, code_station}) {
 
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [],
     });
     const [noDataFound, setNoDataFound] = useState(false)
+    const [error, setError] = useState("")
 
+    const raiseError = async(bool, error) => {
+        setNoDataFound(true);
+        setError(error);
+    }
     useEffect(() => {
         const loadData = async (jsonData) => {
             console.log(jsonData)
-            if (jsonData === undefined)
-                return
-            else if (jsonData.length < 1) {
-                setNoDataFound(true)
+            if (jsonData.length < 1) {
+                raiseError(true, "No data for this period of time");
             }
             try {
                 setChartData({
                     labels: jsonData.map((data) => data.date_mesure_temp),
                     datasets: [
                         {
-                            label: jsonData.length > 0
-                                ? jsonData[0].libelle_station + " (°C)"
-                                : "No data found for this period of time " + code_station.to_string,
+                            label: jsonData[0].libelle_station + " (°C)",
                             data: jsonData.map((data) => data.resultat),
                             backgroundColor: [
                                 "rgba(75,192,192,1)",
@@ -42,7 +43,7 @@ export default function LineChart({index, baseData, fromDate, toDate, code_stati
                     ],
                 });
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
         }
 
@@ -58,21 +59,28 @@ export default function LineChart({index, baseData, fromDate, toDate, code_stati
                     await fetch(requestUrl).then((response) => {
                         response.json().then((json) => {
                             console.log(json)
-                            loadData(json.data);
+                            if (json.data === undefined)
+                                if (json.message !== undefined && json.code !== undefined)
+                                    raiseError(true, "Error, Cannot get data : " + json.code + " | " + json.message );
+                                else
+                                    raiseError(true, "Error, Cannot get data");
+                            else
+                                loadData(json.data);
                             //setStreamList(json.data)
                         })
                     }).catch(error => {
+                        raiseError(true, "Failed to fetch : " + error);
                         console.log(error);
                     });
                 } catch (e) {
+                    raiseError(true, "Couldn't get data : " + e);
                     console.log(e)
                 }
         }
 
         //console.log(elemsToShow)
         fetchStreamTemperature();
-        loadData();
-    }, [index, baseData, code_station, fromDate, toDate])
+    }, [index, code_station, fromDate, toDate])
 
     return (
         <div>
@@ -80,7 +88,9 @@ export default function LineChart({index, baseData, fromDate, toDate, code_stati
                 fromDate !== undefined && toDate !== undefined ?
                     chartData.labels.length === 0
                         ? noDataFound
-                            ? <h1>No Data for this period of time</h1>
+                            ? error.length > 0
+                                ? <h1>{error}</h1>
+                                : <h1>No data found for this time period</h1>
                             :<CircularProgress />
                         : <Line key={code_station} data={chartData} />
                     :null
