@@ -22,6 +22,7 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
             console.log(jsonData)
             if (jsonData.length < 1) {
                 raiseError(true, "No data for this period of time");
+                return;
             }
             try {
                 setChartData({
