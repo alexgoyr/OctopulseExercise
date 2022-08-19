@@ -1,11 +1,9 @@
 import React, {useState, useEffect } from 'react';
-import './App.css';
 import StreamList from './StreamList'
 import GraphList from './GraphList'
 import DateSelecter from './DateSelecter'
 import { useInView } from 'react-intersection-observer';
 import CircularProgress from '@mui/material/CircularProgress';
-import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 
 import Drawer from '@mui/material/Drawer';
@@ -24,7 +22,6 @@ function App() {
         const requestUrl = 'https://hubeau.eaufrance.fr/api/v1/temperature/station?size=' + elemsToShow.toString();
         await fetch(requestUrl).then((response) => {
           response.json().then((json) => {
-            //console.log(json)
             setStreamList(json.data)
           })
         }).catch(error => {
@@ -34,13 +31,10 @@ function App() {
         console.log(e)
       }
     }
-
-    //console.log(elemsToShow)
     fetchStreamList();
   }, [elemsToShow])
 
   const setFurtherLoadingAsync = async (bool) => {
-    // your actions here
     setFurtherLoading(bool);
   }
 
@@ -63,16 +57,11 @@ function App() {
   };
 
   if (furtherLoading === false && inView) {
-    console.log(furtherLoading);
     setFurtherLoadingAsync(true);
     setElemsToShow(elemsToShow + 50);
   } else if (furtherLoading === true && inView === false) {
     setFurtherLoadingAsync(false);
-    console.log(furtherLoading);
   }
-
-  console.log(fromDate)
-  console.log(toDate)
   return (
     <div>
         <Drawer
