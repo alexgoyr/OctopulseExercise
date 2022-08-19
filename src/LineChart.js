@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import CircularProgress from '@mui/material/CircularProgress';
+// eslint-disable-next-line
 import { Chart as ChartJS } from "chart.js/auto";
 import { format } from "date-fns";
 
@@ -15,6 +16,10 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
 
     const raiseError = async(bool, error) => {
         setNoDataFound(true);
+        setChartData({
+            labels: [],
+            datasets: [],
+        });
         setError(error);
     }
     useEffect(() => {
@@ -56,13 +61,14 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
                     const requestUrl = 'https://hubeau.eaufrance.fr/api/v1/temperature/chronique?code_station='+ code_station
                     + '&date_debut_mesure='
                     + format(fromDate, "yyyy-MM-dd")
-                    + '&date_fin_mesure=' + format(toDate, "yyyy-MM-dd");
+                    + '&date_fin_mesure=' + format(toDate, "yyyy-MM-dd")
+                    + '&size=400';
                     await fetch(requestUrl).then((response) => {
                         response.json().then((json) => {
                             console.log(json)
                             if (json.data === undefined)
                                 if (json.message !== undefined && json.code !== undefined)
-                                    raiseError(true, "Error, Cannot get data : " + json.code + " | " + json.message );
+                                    raiseError(true, "Error, Cannot get data : " + json.code + ". " + json.message );
                                 else
                                     raiseError(true, "Error, Cannot get data");
                             else
