@@ -1,6 +1,5 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import DatePicker from './DatePicker';
 import Stack from '@mui/material/Stack';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -29,19 +28,15 @@ export default function DateSelecter({search}) {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Stack >
           <Box sx={{ alignSelf: 'center' }}>
-            <DesktopDatePicker
+            <DatePicker
               label="From"
-              inputFormat="yyyy/MM/dd"
               value={fromDate}
               onChange={handleChangeFrom}
-              renderInput={(params) => <TextField {...params} />}
             />
-            <DesktopDatePicker
+            <DatePicker
               label="To"
-              inputFormat="yyyy/MM/dd"
               value={toDate}
               onChange={handleChangeTo}
-              renderInput={(params) => <TextField {...params} />}
             />
           </Box>
           <Box sx={{ alignSelf: 'center' }}>
