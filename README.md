@@ -2,7 +2,8 @@
 
 # Getting Started
 1. Clone the repo
-*Prerequisites : git
+
+* Prerequisites : git
 ```sh
 git clone https://github.com/alexgoyr/OctopulseExercise
 ```
