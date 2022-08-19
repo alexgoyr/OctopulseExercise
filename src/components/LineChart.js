@@ -98,26 +98,3 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
         </div>
     );
 }
-
-/*code_commune: "97418"
-code_cours_eau: null
-code_parametre: "1301"
-code_qualification: "1"
-code_station: "10310812"
-code_unite: "27"
-date_mesure_temp: "2010-09-08"
-geometry: {type: "Point", crs: {…}, coordinates: Array(2)}
-heure_mesure_temp: "11:00:00"
-latitude: -20.969466696
-libelle_commune: "Sainte-Marie"
-libelle_cours_eau: null
-libelle_parametre: "Température de l'Eau"
-libelle_qualification: "Correcte"
-libelle_station: "La Rivière des Pluies à l'aplomb du piton Tanan"
-localisation: "gorge aval Ravine Diable"
-longitude: 55.491394165
-resultat: 18.666
-symbole_unite: "°C"
-uri_cours_eau: null
-uri_station: "https://id.eaufrance.fr/StationMesureEauxSurface/10310812"
- */
