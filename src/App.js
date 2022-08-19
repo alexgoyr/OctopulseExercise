@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react';
-import StreamList from './StreamList'
-import GraphList from './GraphList'
-import DateSelecter from './DateSelecterField'
+import StreamList from './components/StreamList'
+import GraphList from './components/GraphList'
+import DateSelecter from './components/DateSelecterField'
 import { useInView } from 'react-intersection-observer';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';

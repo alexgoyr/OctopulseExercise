@@ -2,7 +2,6 @@ import React from 'react';
 import LineChart from './LineChart';
 
 export default function GraphList({checkedStreams, from, to}) {
-  console.log(checkedStreams)
   return (
       <div>
         {checkedStreams.map((value, index) => {
