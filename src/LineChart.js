@@ -24,7 +24,6 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
     }
     useEffect(() => {
         const loadData = async (jsonData) => {
-            console.log(jsonData)
             if (jsonData.length < 1) {
                 raiseError(true, "No data for this period of time");
                 return;
@@ -54,8 +53,6 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
         }
 
         const fetchStreamTemperature = async () => {
-            console.log(fromDate)
-            console.log(toDate)
             if (fromDate !== undefined && toDate !== undefined)
                 try {
                     const requestUrl = 'https://hubeau.eaufrance.fr/api/v1/temperature/chronique?code_station='+ code_station
@@ -65,7 +62,6 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
                     + '&size=400';
                     await fetch(requestUrl).then((response) => {
                         response.json().then((json) => {
-                            console.log(json)
                             if (json.data === undefined)
                                 if (json.message !== undefined && json.code !== undefined)
                                     raiseError(true, "Error, Cannot get data : " + json.code + ". " + json.message );
@@ -73,7 +69,6 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
                                     raiseError(true, "Error, Cannot get data");
                             else
                                 loadData(json.data);
-                            //setStreamList(json.data)
                         })
                     }).catch(error => {
                         raiseError(true, "Failed to fetch : " + error);
@@ -84,8 +79,6 @@ export default function LineChart({index, fromDate, toDate, code_station}) {
                     console.log(e)
                 }
         }
-
-        //console.log(elemsToShow)
         fetchStreamTemperature();
     }, [index, code_station, fromDate, toDate])
 

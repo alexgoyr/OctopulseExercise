@@ -10,7 +10,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 export default function CheckboxListSecondary({onChange, checkedStreams, list, triggerRef}) {
   
   let currentRef = useRef()
-  console.log(list)
   const listLength = list.length;
   return (
     

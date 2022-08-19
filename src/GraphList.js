@@ -6,7 +6,6 @@ export default function GraphList({checkedStreams, from, to}) {
   return (
       <div>
         {checkedStreams.map((value, index) => {
-          console.log(value)
           return (<LineChart key={index} index={index} code_station={value} fromDate={from} toDate={to}/>);
         })}
       </div>
